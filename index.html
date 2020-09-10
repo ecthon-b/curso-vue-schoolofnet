@@ -2,14 +2,17 @@
 <html lang="py-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso de VUE.js</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
+
 <body>
-    <div id="app">
-        {{ Ecthon }}
-        <input type="text" v-model="variavel"> <br>
-        {{ variavel }}
+    <div id="app" class="container">
+        <div class="row">
+            <h3>Campeonato Brasileiro - Série A</h3>
+        </div>
     </div>
 
 <!-- versão de desenvolvimento, inclui avisos úteis no console  -->
@@ -19,7 +22,7 @@
     new Vue({
         el: "#app",
         data: {
-            variavel: ''
+            
         }
     })
 </script>
