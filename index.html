@@ -11,7 +11,7 @@
 <body>
     <div id="app" class="container">
         <div class="row">
-            <h3>Campeonato Brasileiro - Série A</h3>
+            <h3>Champions League 2020</h3>
         </div>
         <div>
             
@@ -33,6 +33,18 @@
                         <img :src="time.escudo" alt="">
                         {{time.nome}}
                     </td>
+                    <td>
+                        {{time.pontos}}
+                    </td>
+                    <td>
+                        {{time.gm}}
+                    </td>
+                    <td>
+                        {{time.gs}}
+                    </td>
+                    <td>
+                        {{time.sg}}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -44,10 +56,14 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  
 
 <script>
-    class Time{
+    class Time {
         constructor(nome, escudo) {
             this.nome = nome;
             this.escudo = escudo;
+            this.pontos = 0;
+            this.gm = 0;
+            this.gs = 0;
+            this.sg = 0;
         }
     }
 
