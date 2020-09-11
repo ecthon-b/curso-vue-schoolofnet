@@ -13,18 +13,62 @@
         <div class="row">
             <h3>Campeonato Brasileiro - Série A</h3>
         </div>
+        <div>
+            
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Pontos</th>
+                <th>GM</th>
+                <th>GS</th>
+                <th>Saldo</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="time in times">
+                    <td>
+                        <img :src="time.escudo" alt="">
+                        {{time.nome}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="text" v-model="gols"> {{gols}}
+        <button class="btn btn-primary" @click="showAlert">Fim de Jogo</button>
     </div>
 
-<!-- versão de desenvolvimento, inclui avisos úteis no console  -->
-<script src="https://cdn.jsdelivr.net/npm/vue@4.5.4/dist/vue.js"></script>
+        <!-- versão de desenvolvimento, inclui avisos úteis no console  -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  
 
 <script>
+    class Time{
+        constructor(nome, escudo) {
+            this.nome = nome;
+            this.escudo = escudo;
+        }
+    }
+
     new Vue({
         el: "#app",
         data: {
-            
+            gols: '3',
+            times: [
+                new Time('Real Madrid'),
+                new Time('Barcelona'),
+                new Time('Juventos'),
+                new Time('PSG')
+            ]
+        },
+        methods: {
+            showAlert(){
+                alert('Fim de jogo!')
+            }
         }
     })
+
 </script>
 </body>
 </html>
