@@ -24,50 +24,56 @@
                 <button class="btn btn-primary" @click="criarNovoJogo">Novo Jogo</button>
             </div>
         </div>
+        <br>
         <div>   
         </div>
-        <form class="form-inline">
-            <input type="text" class="form-control col-md-1" v-model="novoJogo.casa.gols">
-            {{novoJogo.casa.time ? novoJogo.casa.time.nome: ''}}
-            <img :src="novoJogo.casa.time ? novoJogo.casa.time.escudo: ''" alt="" class="escudo">
-            <span>X</span>
-            <img :src="novoJogo.fora.time ? novoJogo.fora.time.escudo: ''" alt="" class="escudo">
-            <input type="text" class="form-control col-md-1" v-model="novoJogo.fora.gols">
-            {{novoJogo.fora.time ? novoJogo.fora.time.nome: ''}}
-            <button type="button" class="btn btn-primary" @click="fimJogo">Fim de Jogo</button>
-        </form>
-        
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Pontos</th>
-                <th>GM</th>
-                <th>GS</th>
-                <th>Saldo</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr v-for="time in times">
-                    <td>
-                        <img :src="time.escudo" alt="" class="escudo">
-                        {{time.nome}}
-                    </td>
-                    <td>
-                        {{time.pontos}}
-                    </td>
-                    <td>
-                        {{time.gm}}
-                    </td>
-                    <td>
-                        {{time.gs}}
-                    </td>
-                    <td>
-                        {{time.sg}}
-                    </td>
+        <div class="row">
+            <div class="col-md-12" v-show="visao != 'tabela'">
+                <form class="form-inline">
+                    <input type="text" class="form-control col-md-1" v-model="novoJogo.casa.gols">
+                    {{novoJogo.casa.time ? novoJogo.casa.time.nome: ''}}
+                    <img :src="novoJogo.casa.time ? novoJogo.casa.time.escudo: ''" alt="" class="escudo">
+                    <span>X</span>
+                    <img :src="novoJogo.fora.time ? novoJogo.fora.time.escudo: ''" alt="" class="escudo">
+                    <input type="text" class="form-control col-md-1" v-model="novoJogo.fora.gols">
+                    {{novoJogo.fora.time ? novoJogo.fora.time.nome: ''}}
+                    <button type="button" class="btn btn-primary" @click="fimJogo">Fim de Jogo</button>
+                </form>
+            </div>
+            <div class="col-md-12" v-show="visao === 'tabela'">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Pontos</th>
+                    <th>GM</th>
+                    <th>GS</th>
+                    <th>Saldo</th>
                 </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <tr v-for="time in times">
+                        <td>
+                            <img :src="time.escudo" alt="" class="escudo">
+                            {{time.nome}}
+                        </td>
+                        <td>
+                            {{time.pontos}}
+                        </td>
+                        <td>
+                            {{time.gm}}
+                        </td>
+                        <td>
+                            {{time.gs}}
+                        </td>
+                        <td>
+                            {{time.sg}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
         
     </div>
 
@@ -88,6 +94,7 @@
             if(this.foiEmpate(golsMarcados, golsSofridos)) {
                 this.foiEmpate(golsMarcados, golsSofridos);
                 timeVisitante.empate(golsMarcados, golsSofridos);
+                return;
 
             }
 
@@ -145,7 +152,8 @@
                     time: null,
                     gols: 0
                 }
-            }
+            },
+            visao: 'tabela'
         },
         methods: {
             showAlert(){
@@ -159,6 +167,7 @@
                 this.novoJogo.casa.gols = 0;
                 this.novoJogo.fora.time = this.times[indiceFora];
                 this.novoJogo.fora.gols = 0;
+                this.visao = 'placar';
             },
             fimJogo() {
                 var golsMarcados = parseInt(this.novoJogo.casa.gols);
@@ -166,6 +175,7 @@
                 var timeAdversario = this.novoJogo.fora.time;
                 var timeCasa = this.novoJogo.casa.time;
                 timeCasa.fimJogo(timeAdversario, golsMarcados, golsSofridos)
+                this.visao = 'tabela'
 
             }
         }
