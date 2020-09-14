@@ -17,7 +17,7 @@
 <body>
     <div id="app" class="container">
         <div class="row">
-            <h3>Champions League 2020</h3>
+            <h1>Champions League 2020</h1>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -72,6 +72,21 @@
                     </tr>
                 </tbody>
             </table>
+            <h3>Times classificados para a Libertadores</h3>
+            <ul>
+                <li v-for="time in timesLibertadores">
+                    <img :src="time.escudo" alt="" class="escudo">
+                    {{time.nome}}
+                </li>
+            </ul>
+            <br>
+            <h3>Times Rebaixados</h3>
+            <ul>
+                <li v-for="time in timesRebaixados">
+                    <img :src="time.escudo" alt="" class="escudo">
+                    {{time.nome}}
+                </li>
+            </ul>
         </div>
         </div>
         
@@ -155,6 +170,15 @@
             },
             visao: 'tabela'
         },
+        computed: {
+            timesLibertadores(){
+                return this.times.slice(0,6);
+            },
+            timesRebaixados(){
+                return this.times.slice(15,20);
+            }
+        },
+
         methods: {
             showAlert(){
                 alert('Fim de jogo!')
