@@ -53,13 +53,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="time in times">
+                    <tr v-for="time in timesOrdenados">
                         <td>
                             <img :src="time.escudo" alt="" class="escudo">
                             {{time.nome}}
                         </td>
                         <td>
-                            {{time.pontos}}
+                            <a href="#" @click.prevent="orientacao = orientacao=='desc'? 'asc':'desc'">Pontos</a>
                         </td>
                         <td>
                             {{time.gm}}
@@ -154,6 +154,7 @@
         el: "#app",
         data: {
             gols: '3',
+            orientacao: 'desc',
             times: [
                 new Time('Real Madrid'),
                 new Time('Barcelona'),
@@ -173,11 +174,14 @@
             visao: 'tabela'
         },
         computed: {
-            timesLibertadores(){
+            timesLibertadores() {
                 return this.times.slice(0,6);
             },
-            timesRebaixados(){
+            timesRebaixados() {
                 return this.times.slice(15,20);
+            },
+            timesOrdenados() {
+                return _.orderBy(this.times, 'pontos', this.orientacao)
             }
         },
 
