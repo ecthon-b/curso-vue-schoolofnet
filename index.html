@@ -67,7 +67,7 @@
                             {{time.gs}}
                         </td>
                         <td>
-                            {{time.sg}}
+                            {{time | saldo}}
                         </td>
                     </tr>
                 </tbody>
@@ -175,10 +175,14 @@
                 var timeAdversario = this.novoJogo.fora.time;
                 var timeCasa = this.novoJogo.casa.time;
                 timeCasa.fimJogo(timeAdversario, golsMarcados, golsSofridos)
-                this.visao = 'tabela'
-
+                this.visao = 'tabela';
             }
-        }
+        },
+        filters: {
+                saldo(time){
+                    return time.gm - time.gs;
+                }
+            }
     })
 
 </script>
