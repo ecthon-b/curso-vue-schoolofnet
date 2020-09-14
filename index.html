@@ -46,10 +46,9 @@
                 <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Pontos</th>
-                    <th>GM</th>
-                    <th>GS</th>
-                    <th>Saldo</th>
+                    <th v-for="(coluna, indice) in ordem.colunas">
+                        <a href="#" @click.prevent="ordenar(indice)">{{coluna}}</a>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,7 +58,7 @@
                             {{time.nome}}
                         </td>
                         <td>
-                            <a href="#" @click.prevent="orientacao = orientacao=='desc'? 'asc':'desc'">Pontos</a>
+                            {{times.pontos}}
                         </td>
                         <td>
                             {{time.gm}}
@@ -68,7 +67,7 @@
                             {{time.gs}}
                         </td>
                         <td>
-                            {{time | saldo}}
+                            {{time.saldo}}
                         </td>
                     </tr>
                 </tbody>
@@ -105,7 +104,7 @@
             this.pontos = 0;
             this.gm = 0;
             this.gs = 0;
-            this.sg = 0;
+            this.saldo = 0;
         }
         fimJogo(timeVisitante, golsMarcados, golsSofridos) {
             if(this.foiEmpate(golsMarcados, golsSofridos)) {
@@ -147,6 +146,7 @@
             this.pontos += pontos;
             this.gm += golsMarcados;
             this.gs += golsSofridos;
+            this.saldo += this.gm - this.gs;
         }
     }
 
@@ -154,12 +154,15 @@
         el: "#app",
         data: {
             gols: '3',
-            orientacao: 'desc',
+            ordem: {
+                colunas: ['pontos', 'gm', 'gs', 'saldo'],
+                orientacao: ['desc', 'desc', 'asc', 'saldo']
+            },
             times: [
-                new Time('Real Madrid'),
-                new Time('Barcelona'),
-                new Time('Juventos'),
-                new Time('PSG')
+                new Time('Real Madrid', 'assets/realmadrid.png'),
+                new Time('Barcelona','assets/realmadrid.png'),
+                new Time('Juventos','assets/realmadrid.png'),
+                new Time('PSG','assets/realmadrid.png')
             ],
             novoJogo: {
                 casa: {
@@ -181,7 +184,7 @@
                 return this.times.slice(15,20);
             },
             timesOrdenados() {
-                return _.orderBy(this.times, 'pontos', this.orientacao)
+                return _.orderBy(this.times, this.ordem.colunas, this.oredem.orientacao)
             }
         },
 
@@ -206,6 +209,10 @@
                 var timeCasa = this.novoJogo.casa.time;
                 timeCasa.fimJogo(timeAdversario, golsMarcados, golsSofridos)
                 this.visao = 'tabela';
+            },
+            ordenar(indice) {
+                //this.ordem.orientacao[indice] = this.ordem.orientacao[indice] = ordem.orientacao[indice] =='desc'? 'asc':'desc';
+                this.$set(this.ordem.orientacao, indice, this.ordem.orientacao[indice]=='desc'? 'asc':'desc')
             }
         },
         filters: {
